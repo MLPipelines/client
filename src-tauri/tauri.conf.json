@@ -1,7 +1,7 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "Pytorch Forge",
-  "version": "0.0.4",
+  "version": "0.0.8",
   "identifier": "com.pytorchforge",
   "build": {
     "frontendDist": "../build/client",
