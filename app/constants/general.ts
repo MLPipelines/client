@@ -1,6 +1,5 @@
-import { core } from '@tauri-apps/api'
+import { invoke } from '@tauri-apps/api/core';
 import type { Theme } from "~/types/theme"
-const invoke = core.invoke
 
   export const defaultThemeType: Theme = "light"
 
