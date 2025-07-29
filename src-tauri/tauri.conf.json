@@ -34,9 +34,10 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ],
-    "createUpdaterArtifacts": true
+    "externalBin": ["bin/server"] 
   },
   "plugins": {
+    "shell": {},  
     "updater": {
       "active": true,
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDM4N0QzOUZGRjQzRjFDMDYKUldRR0hELzAvemw5T0NVanhjU01zdTE1TEpvRjErN05Va0M2aWx0aGNuNm1na2pUT1FDTUNDRVAK",

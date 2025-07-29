@@ -4,9 +4,30 @@ import axios from 'axios'
 import { apiServer } from "~/constants/general";
 import { structurizePipelineDLFormData } from "~/helpers/structurizeData";
 
+
+async function waitForServerReady(host: string, retries = 10, delay = 300): Promise<void> {
+  for (let i = 0; i < retries; i++) {
+  try {
+    await axios.get(`${host}/health`, { timeout: 200 });
+    console.log("Health OK");
+    return;
+  } catch (err) {
+    console.log("Health retry", i, err);
+    await new Promise(res => setTimeout(res, delay));
+  }
+}
+
+  throw new Error("Server not responding");
+}
+
+
 export const submitToServer = async (values: PipelineDL) => {
   const serverCompliantConfig = structurizePipelineDLFormData(values);
-  const data = await axios.post(`${apiServer.host}/generate`, serverCompliantConfig)
+  const host = await apiServer();
+  console.log('Server host:', host);
+  await waitForServerReady(host);
+  const data = await axios.post(`${host}/generate`, serverCompliantConfig)
+
   return {
     pyCode: data.data.generated_code as string
   }

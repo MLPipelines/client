@@ -2,7 +2,7 @@ import React from "react"
 import { cn } from "~/utils/general"
 import { SectionRouter } from "./SectionRouter"
 import { sectionSlugToLabel, sectionSlugs, defaultTask } from "~/constants/pipelineDL"
-import { apiServer } from "~/constants/general"
+import type { Theme } from "~/types/theme"
 import {
   StepBackButton,
   StepNavigator,
