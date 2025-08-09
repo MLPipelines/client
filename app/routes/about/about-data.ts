@@ -7,16 +7,6 @@ type Member = {
 
 export const members: Member[] = [
   {
-    imgURL: '/members/mohammad-azeem.png',
-    altText: 'Image of MohammadAzeem, a maintainer of MLPipelines',
-    name: 'Mohammad Azeem',
-    description: [
-      'Engineering for the World Wide Web has driven me since 2023. I strive to make the web engaging and to give users the most native experience possible. My philosophy: being on a site constitutes an <em>experience</em> for the user. Every interaction, every scroll, every click should feel intuitive and purposeful. I maintain this client for PytorchForge, ensuring seamless functionality across all touchpoints. For any improvement, feature request, or bug you encounter while surfing, <a class="link" href="https://mohammadazeem.in/contact" target="__blank">contact</a> me.',
-      'I work as a Software Developer, though I consider myself more Engineer than Developer. In my spare time, I write <a class="link" href="https://mohammadazeem.in/posts" target="__blank">posts</a>—mostly <i>opinionated</i> pieces on Software Engineering. Learn more <a class="link" href="https://www.linkedin.com/in/mohammadazeemwani/" target="__blank">about me</a>.'
-    ]  
-  },
-
-  {
     imgURL: '/members/haroon.png',
     altText: 'Image of Haroon, a maintainer of MLPipelines',
     name: 'Haroon',

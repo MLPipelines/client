@@ -8,7 +8,9 @@ struct ServerPort(Mutex<u16>);
 
 #[tauri::command]
 fn get_server_port(state: State<ServerPort>) -> u16 {
-    *state.inner().0.lock().unwrap()
+    let port = *state.inner().0.lock().unwrap();
+    println!("[Rust] get_server_port called, current port: {}", port);
+    port
 }
 
 pub fn run() {
@@ -34,8 +36,8 @@ pub fn run() {
                 .shell()
                 .sidecar("server")
                 .unwrap()
-                .args(["--port", "0"]);
-            println!("Spawning sidecar...");
+                .args(["--port", "52713"]);
+            println!("[Rust] Spawning sidecar...");
             let (mut rx, mut child) = sidecar_command
                 .spawn()
                 .expect("Failed to spawn sidecar");
@@ -47,6 +49,7 @@ pub fn run() {
                     match event {
                         CommandEvent::Stdout(line_bytes) => {
                             let line = String::from_utf8_lossy(&line_bytes);
+                            println!("[Rust] Sidecar stdout: {}", line);
                             window_clone
                                 .emit("message", Some(format!("'{}'", line)))
                                 .expect("failed to emit event");
@@ -60,11 +63,11 @@ pub fn run() {
                                     let state = app_handle_clone.state::<ServerPort>();
                                     let mut lock = state.inner().0.lock().unwrap();
                                     *lock = port;
-                                    println!("Detected sidecar port: {}", port);
-
+                                    println!("[Rust] Detected sidecar port: {}", port);
                                     // Notify frontend that port is ready
-                                    app_handle_clone.emit("server-port-ready", port)
+                                    app_handle_clone.emit("server-port-ready", 52713)
                                         .expect("failed to emit server port");
+                                    println!("[Rust] Emitted 'server-port-ready' with port: {}", port);
                                 }
                             }
 
@@ -72,7 +75,7 @@ pub fn run() {
                         }
                         CommandEvent::Stderr(line_bytes) => {
                             let line = String::from_utf8_lossy(&line_bytes);
-                            println!("Sidecar stderr: {}", line);
+                            println!("[Rust] Sidecar stderr: {}", line);
                         }
                         _ => {}
                     }
@@ -81,7 +84,7 @@ pub fn run() {
 
             Ok(())
         })
-        .manage(ServerPort(Mutex::new(0)))
+        .manage(ServerPort(Mutex::new(52713)))
         .invoke_handler(tauri::generate_handler![get_server_port])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
