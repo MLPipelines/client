@@ -1,11 +1,9 @@
 use std::sync::Mutex;
-
 use tauri::{Manager, State};
 use tauri_plugin_shell::process::CommandEvent;
 use tauri_plugin_shell::ShellExt;
 use tauri::Emitter;
 
-// Shared state to store the server's port
 struct ServerPort(Mutex<u16>);
 
 #[tauri::command]
@@ -63,6 +61,10 @@ pub fn run() {
                                     let mut lock = state.inner().0.lock().unwrap();
                                     *lock = port;
                                     println!("Detected sidecar port: {}", port);
+
+                                    // Notify frontend that port is ready
+                                    app_handle_clone.emit("server-port-ready", port)
+                                        .expect("failed to emit server port");
                                 }
                             }
 
